@@ -1,0 +1,24 @@
+﻿using MediatR;
+
+namespace Microsoft.Extensions.DependencyInjection.WeatherForecasts.Queries.GetWeatherForecasts;
+
+public record GetWeatherForecastsQuery : IRequest<IEnumerable<WeatherForecast>>;
+
+public class GetWeatherForecastQueryHandler : RequestHandler<GetWeatherForecastsQuery, IEnumerable<WeatherForecast>>
+{
+    private static readonly string[] Summaries = {
+        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    };
+    
+    protected override IEnumerable<WeatherForecast> Handle(GetWeatherForecastsQuery request)
+    {
+        var rng = new Random();
+
+        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        {
+            Date = DateTime.Now.AddDays(index),
+            TemperatureC = rng.Next(-20, 55),
+            Summary = Summaries[rng.Next(Summaries.Length)]
+        });
+    }
+}
