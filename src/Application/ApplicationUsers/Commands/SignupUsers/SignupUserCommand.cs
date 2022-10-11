@@ -8,12 +8,10 @@ public record SignupUserCommand(string Email, string PhoneNumber, string Passwor
 
 public class SignupUserCommandHandler : IRequestHandler<SignupUserCommand>
 {
-    private readonly IApplicationDbContext _dbContext;
     private readonly IIdentityService _identityService;
 
-    public SignupUserCommandHandler(IApplicationDbContext dbContext, IIdentityService identityService)
+    public SignupUserCommandHandler(IIdentityService identityService)
     {
-        _dbContext = dbContext;
         _identityService = identityService;
     }
 
@@ -21,8 +19,8 @@ public class SignupUserCommandHandler : IRequestHandler<SignupUserCommand>
     {
         var (result, userId) = await _identityService.CreateUserAsync(
             request.Email, 
-            request.PhoneNumber, 
-            request.Password);
+            request.Password, 
+            request.PhoneNumber);
 
         if (!result.Succeeded) 
             throw new Exception("Problem creating user");
