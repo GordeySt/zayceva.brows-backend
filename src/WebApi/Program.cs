@@ -1,6 +1,22 @@
+using Infrastructure;
+using Microsoft.Extensions.DependencyInjection.Startup.Settings;
+
 var builder = WebApplication.CreateBuilder(args);
 
+var dbSettings = builder.Configuration
+    .GetSection(nameof(AppSettings.DbSettings))
+    .Get<DbSettings>();
+
+var appSettings = new AppSettings
+{
+    DbSettings = dbSettings
+};
+
+builder.Services.UseConfigurationValidation();
+builder.Services.ConfigureValidatableSetting<AppSettings>(builder.Configuration);
+
 builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices(appSettings.DbSettings);
 builder.Services.AddWebApiServices();
 
 var app = builder.Build();
