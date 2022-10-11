@@ -1,23 +1,15 @@
 using Application;
 using Infrastructure;
 using Infrastructure.Persistence;
-using Infrastructure.Settings;
 using WebApi;
 using WebApi.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var dbSettings = builder.Configuration
-    .GetSection(nameof(AppSettings.DbSettings))
-    .Get<DbSettings>();
-
-var appSettings = new AppSettings
-{
-    DbSettings = dbSettings
-};
+var appSettings = AppSettingsBuilder.ReadAppSettings(builder.Configuration);
 
 builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices(appSettings.DbSettings);
+builder.Services.AddInfrastructureServices(appSettings.DbSettings, appSettings.IdentitySettings);
 builder.Services.AddWebApiServices(builder.Configuration);
 
 var app = builder.Build();
