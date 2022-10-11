@@ -1,6 +1,7 @@
-﻿using NetEscapades.Configuration.Validation;
+﻿using Infrastructure.Settings;
+using NetEscapades.Configuration.Validation;
 
-namespace Microsoft.Extensions.DependencyInjection.Startup.Settings;
+namespace WebApi.Settings;
 
 public class AppSettings : IValidatable
 {

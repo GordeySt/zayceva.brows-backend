@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using NetEscapades.Configuration.Validation;
 
-namespace Microsoft.Extensions.DependencyInjection.Startup.Settings;
+namespace Infrastructure.Settings;
 
 public class DbSettings : IValidatable
 {
