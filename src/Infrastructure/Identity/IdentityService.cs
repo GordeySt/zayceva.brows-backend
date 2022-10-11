@@ -1,4 +1,5 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.ApplicationUsers.Commands.SignupUsers;
+using Application.Common.Interfaces;
 using Application.Common.Models;
 using Microsoft.AspNetCore.Identity;
 
@@ -14,16 +15,18 @@ public class IdentityService : IIdentityService
         _userManager = userManager;
     }
 
-    public async Task<(Result result, Guid userId)> CreateUserAsync(string email, string password, string phoneNumber)
+    public async Task<(Result result, Guid userId)> CreateUserAsync(SignupUserCommand signupUserCommand)
     {
         var user = new AppUser
         {
-            UserName = email,
-            Email = email,
-            PhoneNumber = phoneNumber
+            FirstName = signupUserCommand.FirstName,
+            LastName = signupUserCommand.LastName,
+            UserName = signupUserCommand.Email,
+            Email = signupUserCommand.Email,
+            PhoneNumber = signupUserCommand.PhoneNumber
         };
 
-        var result = await _userManager.CreateAsync(user, password);
+        var result = await _userManager.CreateAsync(user, signupUserCommand.Password);
 
         return (result.ToApplicationResult(), user.Id);
     }

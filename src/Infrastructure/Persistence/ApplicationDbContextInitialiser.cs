@@ -1,4 +1,4 @@
-﻿using Application.Constants;
+﻿using Application.Common.Constants;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -80,6 +80,8 @@ public class ApplicationDbContextInitialiser
         // Default users
         var administrator = new AppUser
         {
+            FirstName = "Admin",
+            LastName = "Admin",
             Id = Guid.NewGuid(),
             UserName = "administrator@localhost", 
             Email = "administrator@localhost",
@@ -87,6 +89,8 @@ public class ApplicationDbContextInitialiser
         };
         var user = new AppUser
         {
+            FirstName = "User",
+            LastName = "User",
             Id = Guid.NewGuid(),
             UserName = "user@localhost", 
             Email = "user@localhost",

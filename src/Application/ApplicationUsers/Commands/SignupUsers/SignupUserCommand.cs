@@ -1,10 +1,11 @@
-﻿using Application.Common.Interfaces;
-using Application.Constants;
+﻿using Application.Common.Constants;
+using Application.Common.Interfaces;
 using MediatR;
 
 namespace Application.ApplicationUsers.Commands.SignupUsers;
 
-public record SignupUserCommand(string Email, string PhoneNumber, string Password) : IRequest;
+public record SignupUserCommand(
+    string FirstName, string LastName, string Email, string PhoneNumber, string Password) : IRequest;
 
 public class SignupUserCommandHandler : IRequestHandler<SignupUserCommand>
 {
@@ -17,10 +18,7 @@ public class SignupUserCommandHandler : IRequestHandler<SignupUserCommand>
 
     public async Task<Unit> Handle(SignupUserCommand request, CancellationToken cancellationToken)
     {
-        var (result, userId) = await _identityService.CreateUserAsync(
-            request.Email, 
-            request.Password, 
-            request.PhoneNumber);
+        var (result, userId) = await _identityService.CreateUserAsync(request);
 
         if (!result.Succeeded) 
             throw new Exception("Problem creating user");
