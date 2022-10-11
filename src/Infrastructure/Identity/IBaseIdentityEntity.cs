@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.Identity;
 
-public interface IBaseEntity
+public interface IBaseIdentityEntity
 {
     public Guid Id { get; set; }
 

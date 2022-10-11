@@ -2,11 +2,11 @@
 
 namespace Infrastructure.Identity;
 
-public class AppUser : IdentityUser<Guid>, IBaseEntity
+public class AppUser : IdentityUser<Guid>, IBaseIdentityEntity
 {
     public IList<AppUserRole> UserRoles { get; set; }
 
-    public DateTime CreationDate { get; set; }
-    
+    public DateTime CreationDate { get; set; } = DateTime.Now.ToUniversalTime();
+
     public bool IsDeleted { get; set; }
 }
