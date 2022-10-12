@@ -12,6 +12,8 @@ builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(appSettings.DbSettings, appSettings.IdentitySettings);
 builder.Services.AddWebApiServices(builder.Configuration);
 
+builder.Services.AddSingleton(appSettings);
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
