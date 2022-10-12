@@ -1,13 +1,15 @@
 ﻿using Application.Common.Constants;
+using Application.Common.Enums;
 using Application.Common.Interfaces;
+using Application.Common.Models;
 using MediatR;
 
 namespace Application.ApplicationUsers.Commands.SignupUsers;
 
 public record SignupUserCommand(
-    string FirstName, string LastName, string Email, string PhoneNumber, string Password) : IRequest;
+    string FirstName, string LastName, string Email, string PhoneNumber, string Password) : IRequest<ApplicationResult>;
 
-public class SignupUserCommandHandler : IRequestHandler<SignupUserCommand>
+public class SignupUserCommandHandler : IRequestHandler<SignupUserCommand, ApplicationResult>
 {
     private readonly IIdentityService _identityService;
 
@@ -16,15 +18,24 @@ public class SignupUserCommandHandler : IRequestHandler<SignupUserCommand>
         _identityService = identityService;
     }
 
-    public async Task<Unit> Handle(SignupUserCommand request, CancellationToken cancellationToken)
+    public async Task<ApplicationResult> Handle(SignupUserCommand request, CancellationToken cancellationToken)
     {
+        if (await _identityService.GetUserIdByEmailAsync(request.Email) is not null)
+        {
+            return new ApplicationResult(
+                ApplicationResultType.InvalidData, 
+                BadRequestExceptionMessageConstants.ExistedUserMessage);
+        }
+
         var (result, userId) = await _identityService.CreateUserAsync(request);
 
-        if (!result.Succeeded) 
-            throw new Exception("Problem creating user");
+        if (!result.Succeeded)
+            return new ApplicationResult(
+                ApplicationResultType.InternalError, 
+                InternalServerErrorExceptionMessageConstants.ProblemCreatingUser);
 
-        await _identityService.AddUserToRole(userId, AppRolesConstants.UserRole);
+        await _identityService.AddUserToRoleAsync(userId, AppRolesConstants.UserRole);
         
-        return Unit.Value;
+        return new ApplicationResult(ApplicationResultType.Success);
     }
 }

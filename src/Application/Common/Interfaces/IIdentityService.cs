@@ -5,7 +5,9 @@ namespace Application.Common.Interfaces;
 
 public interface IIdentityService
 {
-    Task<(Result result, Guid userId)> CreateUserAsync(SignupUserCommand command);
+    Task<(IdentityResult result, Guid userId)> CreateUserAsync(SignupUserCommand command);
 
-    Task AddUserToRole(Guid userId, string role);
+    Task AddUserToRoleAsync(Guid userId, string role);
+
+    Task<Guid?> GetUserIdByEmailAsync(string email);
 }

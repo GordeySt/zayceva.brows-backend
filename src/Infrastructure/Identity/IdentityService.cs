@@ -1,7 +1,7 @@
 ﻿using Application.ApplicationUsers.Commands.SignupUsers;
 using Application.Common.Interfaces;
-using Application.Common.Models;
 using Microsoft.AspNetCore.Identity;
+using IdentityResult = Application.Common.Models.IdentityResult;
 
 namespace Infrastructure.Identity;
 
@@ -15,7 +15,7 @@ public class IdentityService : IIdentityService
         _userManager = userManager;
     }
 
-    public async Task<(Result result, Guid userId)> CreateUserAsync(SignupUserCommand signupUserCommand)
+    public async Task<(IdentityResult result, Guid userId)> CreateUserAsync(SignupUserCommand signupUserCommand)
     {
         var user = new AppUser
         {
@@ -31,11 +31,18 @@ public class IdentityService : IIdentityService
         return (result.ToApplicationResult(), user.Id);
     }
 
-    public async Task AddUserToRole(Guid userId, string role)
+    public async Task AddUserToRoleAsync(Guid userId, string role)
     {
         var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
 
         if (user is not null)
             await _userManager.AddToRoleAsync(user, role);
+    }
+
+    public async Task<Guid?> GetUserIdByEmailAsync(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+
+        return user?.Id;
     }
 }
