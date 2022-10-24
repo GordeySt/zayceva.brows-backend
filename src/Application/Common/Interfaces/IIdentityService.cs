@@ -10,4 +10,6 @@ public interface IIdentityService
     Task AddUserToRoleAsync(Guid userId, string role);
 
     Task<Guid?> GetUserIdByEmailAsync(string email);
+
+    Task<string> GenerateEmailConfirmationTokenAsync(Guid userId);
 }

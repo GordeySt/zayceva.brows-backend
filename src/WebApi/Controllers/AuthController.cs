@@ -9,6 +9,8 @@ public class AuthController : ApiControllerBase
     [HttpPost("sign-up")]
     public async Task<ActionResult> SignUpUser(SignupUserCommand command)
     {
+        command.Origin = Request.Headers["origin"];
+        
         var result = await Mediator.Send(command);
 
         if (result.Result is not ApplicationResultType.Success) 

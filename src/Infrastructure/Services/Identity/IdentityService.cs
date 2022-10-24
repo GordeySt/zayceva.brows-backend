@@ -3,7 +3,7 @@ using Application.Common.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using IdentityResult = Application.Common.Models.IdentityResult;
 
-namespace Infrastructure.Identity;
+namespace Infrastructure.Services.Identity;
 
 public class IdentityService : IIdentityService
 {
@@ -44,5 +44,15 @@ public class IdentityService : IIdentityService
         var user = await _userManager.FindByEmailAsync(email);
 
         return user?.Id;
+    }
+
+    public async Task<string> GenerateEmailConfirmationTokenAsync(Guid userId)
+    {
+        var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+
+        if (user is not null)
+            return await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+        return string.Empty;
     }
 }
