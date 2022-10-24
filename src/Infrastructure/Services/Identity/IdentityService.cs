@@ -55,4 +55,13 @@ public class IdentityService : IIdentityService
 
         return string.Empty;
     }
+
+    public async Task<IdentityResult> ConfirmEmailAsync(Guid? userId, string token)
+    {
+        var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+        
+        var result = await _userManager.ConfirmEmailAsync(user, token);
+
+        return result.ToApplicationResult();
+    }
 }

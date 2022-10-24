@@ -71,7 +71,7 @@ public class SignupUserCommandHandler : IRequestHandler<SignupUserCommand, Appli
     }
 
     private string GenerateConfirmationUrl(string origin, string token, string email) =>
-        $"{origin}/auth/verify-email?token={token}&email={email}";
+        $"{origin}/auth/confirm-email?email={email}&token={token}";
     
     private string GenerateEmailLayout(string confirmationUrl)
     {

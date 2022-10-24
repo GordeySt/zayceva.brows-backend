@@ -12,4 +12,6 @@ public interface IIdentityService
     Task<Guid?> GetUserIdByEmailAsync(string email);
 
     Task<string> GenerateEmailConfirmationTokenAsync(Guid userId);
+
+    Task<IdentityResult> ConfirmEmailAsync(Guid? userId, string token);
 }
