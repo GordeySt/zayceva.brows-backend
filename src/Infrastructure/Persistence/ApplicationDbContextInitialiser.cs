@@ -1,5 +1,5 @@
 ﻿using Application.Common.Constants;
-using Infrastructure.Identity;
+using Infrastructure.Services.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

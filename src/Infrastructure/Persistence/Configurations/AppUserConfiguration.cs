@@ -1,4 +1,4 @@
-﻿using Infrastructure.Identity;
+﻿using Infrastructure.Services.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,8 +1,6 @@
-﻿using Application.Common.Models;
-using Microsoft.AspNetCore.Identity;
-using IdentityResult = Application.Common.Models.IdentityResult;
+﻿using IdentityResult = Application.Common.Models.IdentityResult;
 
-namespace Infrastructure.Identity;
+namespace Infrastructure.Services.Identity;
 
 public static class IdentityResultExtensions
 {

@@ -9,7 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 var appSettings = AppSettingsBuilder.ReadAppSettings(builder.Configuration);
 
 builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices(appSettings.DbSettings, appSettings.IdentitySettings);
+builder.Services.AddInfrastructureServices(
+    appSettings.DbSettings, 
+    appSettings.IdentitySettings, 
+    appSettings.SmtpClientSettings);
 builder.Services.AddWebApiServices(builder.Configuration);
 
 builder.Services.AddSingleton(appSettings);
@@ -19,11 +22,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-}
-else
-{
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    
+    using var scope = app.Services.CreateScope();
+
+    var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
+    await initialiser.InitialiseAsync();
+    await initialiser.SeedAsync();
 }
 
 app.UseHealthChecks("/health");
