@@ -1,6 +1,7 @@
 ﻿using Application.Common.Interfaces;
-using Infrastructure.Identity;
 using Infrastructure.Persistence;
+using Infrastructure.Services.Email;
+using Infrastructure.Services.Identity;
 using Infrastructure.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,7 +12,7 @@ namespace Infrastructure;
 public static class ConfigureServices
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services,
-        DbSettings dbSettings, IdentitySettings identitySettings)
+        DbSettings dbSettings, IdentitySettings identitySettings, SmtpClientSettings smtpClientSettings)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseNpgsql(dbSettings.ConnectionString,
@@ -34,6 +35,7 @@ public static class ConfigureServices
             .AddDefaultTokenProviders();
         
         services.AddTransient<IIdentityService, IdentityService>();
+        services.AddTransient<IEmailService>(sp => new EmailService(smtpClientSettings));
 
         return services;
     }
