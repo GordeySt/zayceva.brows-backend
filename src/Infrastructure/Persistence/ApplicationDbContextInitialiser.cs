@@ -54,7 +54,7 @@ public class ApplicationDbContextInitialiser
         }
     }
 
-    public async Task TrySeedAsync()
+    private async Task TrySeedAsync()
     {
         // Default roles
         var adminRole = new AppRole
