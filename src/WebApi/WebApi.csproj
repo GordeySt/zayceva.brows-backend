@@ -17,6 +17,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <InternalsVisibleTo Include="Application.IntegrationTests" />
+    </ItemGroup>
+
+    <ItemGroup>
       <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.9" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9">
