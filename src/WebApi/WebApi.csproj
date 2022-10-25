@@ -7,6 +7,8 @@
         <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
         <UserSecretsId>b8217471-cd6d-44d4-88e4-160200957b21</UserSecretsId>
         <DockerfileContext>..\..</DockerfileContext>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>

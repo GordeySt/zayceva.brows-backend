@@ -8,7 +8,18 @@ namespace WebApi.Controllers;
 
 public class AuthController : ApiControllerBase
 {
+    /// <summary>
+    /// User account signing up
+    /// </summary>
+    /// <param name="command">Sign up data.</param>
+    /// <response code="204">User signed up successfully.</response>
+    /// <response code="400">Unable to create user due to existence.</response>
+    /// <returns>
+    /// NoContent object result
+    /// </returns>
     [HttpPost("sign-up")]
+    [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> SignUpUser([FromBody] SignupUserCommand command)
     {
         command.Origin = Request.Headers["origin"];
@@ -21,7 +32,20 @@ public class AuthController : ApiControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// User account email confirmation
+    /// </summary>
+    /// <param name="command">Email confirmation data.</param>
+    /// <response code="204">Email confirmed successfully.</response>
+    /// <response code="400">Problem confirming email.</response>
+    /// <response code="404">User to confirm email for not found.</response>
+    /// <returns>
+    /// NoContent object result
+    /// </returns>
     [HttpPost("confirm-email")]
+    [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ConfirmEmail([FromBody] ConfirmEmailCommand command)
     {
         var result = await Mediator.Send(command);
@@ -32,7 +56,18 @@ public class AuthController : ApiControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// User account email confirmation
+    /// </summary>
+    /// <param name="query">Email resend data.</param>
+    /// <response code="204">Email resent successfully.</response>
+    /// <response code="404">User to resend email confirmation for not found.</response>
+    /// <returns>
+    /// NoContent object result
+    /// </returns>
     [HttpGet("resend-confirmation-email")]
+    [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ResendConfirmationEmail([FromQuery] ResendEmailConfirmationQuery query)
     {
         query.Origin = Request.Headers["origin"];
