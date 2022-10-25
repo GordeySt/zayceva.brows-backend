@@ -6,7 +6,11 @@ using MediatR;
 
 namespace Application.ApplicationUsers.Commands.ConfirmEmails;
 
-public record ConfirmEmailCommand(string Email, string Token) : IRequest<ApplicationResult>;
+public class ConfirmEmailCommand : IRequest<ApplicationResult>
+{
+    public string Email { get; set; }
+    public string Token { get; set; }
+}
 
 public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, ApplicationResult>
 {
