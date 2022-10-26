@@ -18,13 +18,18 @@ public static class AppSettingsBuilder
             .GetSection(nameof(AppSettings.SmtpClientSettings))
             .Get<SmtpClientSettings>();
 
+        var appUrlsSettings = configuration
+            .GetSection(nameof(AppSettings.AppUrlsSettings))
+            .Get<AppUrlsSettings>();
+
         smtpClientSettings.Password = configuration["SmtpClientSettings:Password"];
 
         return new AppSettings
         {
             DbSettings = dbSettings,
             IdentitySettings = identitySettings,
-            SmtpClientSettings = smtpClientSettings
+            SmtpClientSettings = smtpClientSettings,
+            AppUrlsSettings = appUrlsSettings
         };
     }
 }

@@ -4,9 +4,24 @@ using Infrastructure.Persistence;
 using WebApi;
 using WebApi.Settings;
 
+const string corsPolicy = "_corsPolicy";
+
 var builder = WebApplication.CreateBuilder(args);
 
 var appSettings = AppSettingsBuilder.ReadAppSettings(builder.Configuration);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: corsPolicy,
+        policy =>
+        {
+            policy
+                .WithOrigins(appSettings.AppUrlsSettings.ClientAppUrl)
+                .WithOrigins("http://192.168.0.103:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(
@@ -30,6 +45,7 @@ if (app.Environment.IsDevelopment())
     await initialiser.SeedAsync();
 }
 
+
 app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -41,7 +57,10 @@ app.UseSwaggerUI(options =>
     options.RoutePrefix = string.Empty;
 });
 
+
 app.UseRouting();
+
+app.UseCors(corsPolicy);
 
 app.UseEndpoints(endpoints =>
 {

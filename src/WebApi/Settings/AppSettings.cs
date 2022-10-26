@@ -8,6 +8,7 @@ public class AppSettings : IValidatable
     public DbSettings DbSettings { get; set; }
     public IdentitySettings IdentitySettings { get; set; }
     public SmtpClientSettings SmtpClientSettings { get; set; }
+    public AppUrlsSettings AppUrlsSettings { get; set; }
     
     public void Validate()
     {
