@@ -1,9 +1,11 @@
-﻿using Application.Common.Constants;
+﻿using System.Text;
+using Application.Common.Constants;
 using Application.Common.Enums;
 using Application.Common.Interfaces;
 using Application.Common.Models;
 using HandlebarsDotNet;
 using MediatR;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Application.ApplicationUsers.Queries.ResendEmailConfirmations;
 
@@ -37,6 +39,8 @@ public class ResendEmailConfirmationQueryHandler : IRequestHandler<ResendEmailCo
         }
 
         var token = await _identityService.GenerateEmailConfirmationTokenAsync(userId.Value);
+
+        token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
         
         SendConfirmationEmail(request.Origin!, token, request.Email);
 
@@ -61,7 +65,7 @@ public class ResendEmailConfirmationQueryHandler : IRequestHandler<ResendEmailCo
     }
 
     private string GenerateConfirmationUrl(string origin, string token, string email) =>
-        $"{origin}/auth/confirm-email?email={email}&token={token}";
+        $"{origin}/confirmed-email?email={email}&token={token}";
     
     private string GenerateEmailLayout(string confirmationUrl)
     {

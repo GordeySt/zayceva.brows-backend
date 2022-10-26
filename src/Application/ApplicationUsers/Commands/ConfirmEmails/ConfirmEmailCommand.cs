@@ -1,8 +1,10 @@
-﻿using Application.Common.Constants;
+﻿using System.Text;
+using Application.Common.Constants;
 using Application.Common.Enums;
 using Application.Common.Interfaces;
 using Application.Common.Models;
 using MediatR;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Application.ApplicationUsers.Commands.ConfirmEmails;
 
@@ -31,7 +33,10 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, A
                 NotFoundExceptionMessageConstants.NotFoundUserMessage);
         }
 
-        var result = await _identityService.ConfirmEmailAsync(userId, request.Token);
+        var decodedTokenBytes = WebEncoders.Base64UrlDecode(request.Token);
+        var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
+        
+        var result = await _identityService.ConfirmEmailAsync(userId, decodedToken);
 
         if (!result.Succeeded)
         {
