@@ -4,8 +4,6 @@ namespace Application.Common.Validators;
 
 public static class FluentValidatorExtensions
 {
-    private const string BelarusPhoneNumberRegex = @"^\+375 \((17|29|33|44)\) [0-9]{3}-[0-9]{2}-[0-9]{2}$";
-    
     public static void Password<T>(this IRuleBuilder<T, string> ruleBuilder)
     {
         ruleBuilder
@@ -38,7 +36,6 @@ public static class FluentValidatorExtensions
     {
         ruleBuilder
             .NotEmpty().WithMessage("Phone number must not be empty")
-            .Matches(BelarusPhoneNumberRegex)
             .WithMessage("Phone number format is invalid");
     }
 }
