@@ -57,10 +57,12 @@ app.UseSwaggerUI(options =>
     options.RoutePrefix = string.Empty;
 });
 
+app.UseCors(corsPolicy);
 
 app.UseRouting();
 
-app.UseCors(corsPolicy);
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
