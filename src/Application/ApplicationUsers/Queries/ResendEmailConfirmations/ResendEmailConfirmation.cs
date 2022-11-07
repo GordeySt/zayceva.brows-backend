@@ -35,7 +35,7 @@ public class ResendEmailConfirmationQueryHandler : IRequestHandler<ResendEmailCo
         if (userId is null)
         {
             return new ApplicationResult(ApplicationResultType.NotFound,
-                NotFoundExceptionMessageConstants.NotFoundUserMessage);
+                NotFoundExceptionMessageConstants.NotFoundUser);
         }
 
         var token = await _identityService.GenerateEmailConfirmationTokenAsync(userId.Value);

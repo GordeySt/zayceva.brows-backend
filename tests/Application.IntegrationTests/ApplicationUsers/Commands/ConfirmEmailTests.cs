@@ -2,8 +2,8 @@
 using Application.Common.Constants;
 using Application.Common.Enums;
 using Application.Common.Exceptions;
+using Domain;
 using FluentAssertions;
-using Infrastructure.Services.Identity;
 using NUnit.Framework;
 
 namespace Application.IntegrationTests.ApplicationUsers.Commands;
@@ -38,7 +38,7 @@ public class ConfirmEmailTests : BaseTestFixture
 
         // Assert
         result.Result.Should().Be(ApplicationResultType.NotFound);
-        result.Message.Should().Be(NotFoundExceptionMessageConstants.NotFoundUserMessage);
+        result.Message.Should().Be(NotFoundExceptionMessageConstants.NotFoundUser);
     }
 
     [Test]

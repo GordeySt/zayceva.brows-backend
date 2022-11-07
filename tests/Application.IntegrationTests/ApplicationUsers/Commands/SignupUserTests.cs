@@ -2,8 +2,8 @@
 using Application.Common.Constants;
 using Application.Common.Enums;
 using Application.Common.Exceptions;
+using Domain;
 using FluentAssertions;
-using Infrastructure.Services.Identity;
 using NUnit.Framework;
 
 namespace Application.IntegrationTests.ApplicationUsers.Commands;
@@ -54,7 +54,7 @@ public class SignupUserTests : BaseTestFixture
         
         // Assert
         result.Result.Should().Be(ApplicationResultType.InvalidData);
-        result.Message.Should().Be(BadRequestExceptionMessageConstants.ExistedUserMessage);
+        result.Message.Should().Be(BadRequestExceptionMessageConstants.ExistedUser);
     }
     
     [Test]

@@ -30,7 +30,7 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, A
         if (userId is null)
         {
             return new ApplicationResult(ApplicationResultType.NotFound,
-                NotFoundExceptionMessageConstants.NotFoundUserMessage);
+                NotFoundExceptionMessageConstants.NotFoundUser);
         }
 
         var decodedTokenBytes = WebEncoders.Base64UrlDecode(request.Token);
@@ -41,7 +41,7 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, A
         if (!result.Succeeded)
         {
             return new ApplicationResult(ApplicationResultType.InvalidData, 
-                BadRequestExceptionMessageConstants.ProblemVerifyingEmailMessage);
+                BadRequestExceptionMessageConstants.ProblemVerifyingEmail);
         }
 
         return new ApplicationResult(ApplicationResultType.Success);

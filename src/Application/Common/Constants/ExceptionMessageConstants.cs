@@ -2,16 +2,21 @@
 
 public static class NotFoundExceptionMessageConstants
 {
-    public const string NotFoundUserMessage = "User with the following id not found";
+    public const string NotFoundUser = nameof(NotFoundUser);
 }
 
 public static class BadRequestExceptionMessageConstants
 {
-    public const string ExistedUserMessage = "User with the following email already exists";
-    public const string ProblemVerifyingEmailMessage = "Problem verifying message";
+    public const string ExistedUser = nameof(ExistedUser);
+    public const string ProblemVerifyingEmail = nameof(ProblemVerifyingEmail);
 }
+
+public static class UnauthorizedExceptionMessageConstants
+{
+    public const string InvalidPassword = nameof(InvalidPassword);
+} 
 
 public static class InternalServerErrorExceptionMessageConstants
 {
-    public const string ProblemCreatingUser = "Problem creating user";
+    public const string ProblemCreatingUser = nameof(ProblemCreatingUser);
 }
