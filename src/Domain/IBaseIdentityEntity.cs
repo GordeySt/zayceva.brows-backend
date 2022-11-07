@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Services.Identity;
+﻿namespace Domain;
 
 public interface IBaseIdentityEntity
 {

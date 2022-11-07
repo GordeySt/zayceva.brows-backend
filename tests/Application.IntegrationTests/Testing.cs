@@ -1,12 +1,10 @@
 ﻿using System.Linq.Expressions;
-using Application.Common.Constants;
+using Domain;
 using Infrastructure.Persistence;
-using Infrastructure.Services.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;

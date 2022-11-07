@@ -3,7 +3,7 @@ using NetEscapades.Configuration.Validation;
 
 namespace Infrastructure.Settings;
 
-public class SmtpClientSettings: IValidatable
+public class SmtpClientSettings : IValidatable
 {
     [Required]
     public string Host { get; set; }
