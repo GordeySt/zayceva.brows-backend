@@ -16,6 +16,11 @@ public class IdentityResult
     {
         return new IdentityResult(true, Array.Empty<string>());
     }
+    
+    public static IdentityResult Failure()
+    {
+        return new IdentityResult(false, Array.Empty<string>());
+    }
 
     public static IdentityResult Failure(IEnumerable<string> errors)
     {
