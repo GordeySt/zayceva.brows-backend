@@ -1,18 +1,27 @@
 ﻿using Application.ApplicationUsers.Commands.SignupUsers;
 using Application.Common.Interfaces;
+using Domain;
+using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using IdentityResult = Application.Common.Models.IdentityResult;
 
 namespace Infrastructure.Services.Identity;
 
 public class IdentityService : IIdentityService
 {
-
     private readonly UserManager<AppUser> _userManager;
-    
-    public IdentityService(UserManager<AppUser> userManager)
+    private readonly SignInManager<AppUser> _signInManager;
+    private readonly ApplicationDbContext _applicationDbContext;
+
+    public IdentityService(
+        UserManager<AppUser> userManager,
+        SignInManager<AppUser> signInManager, 
+        ApplicationDbContext applicationDbContext)
     {
         _userManager = userManager;
+        _signInManager = signInManager;
+        _applicationDbContext = applicationDbContext;
     }
 
     public async Task<(IdentityResult result, Guid userId)> CreateUserAsync(SignupUserCommand signupUserCommand)
@@ -33,7 +42,7 @@ public class IdentityService : IIdentityService
 
     public async Task AddUserToRoleAsync(Guid userId, string role)
     {
-        var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+        var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
 
         if (user is not null)
             await _userManager.AddToRoleAsync(user, role);
@@ -46,9 +55,18 @@ public class IdentityService : IIdentityService
         return user?.Id;
     }
 
+    public async Task<AppUser> GetUserByEmailAsync(string email)
+    {
+        return await _applicationDbContext.Users
+            .AsNoTracking()
+            .Include(user => user.UserRoles)
+            .ThenInclude(userRole => userRole.AppRole)
+            .SingleOrDefaultAsync(user => user.Email == email);
+    }
+
     public async Task<string> GenerateEmailConfirmationTokenAsync(Guid userId)
     {
-        var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+        var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
 
         if (user is not null)
             return await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -58,10 +76,22 @@ public class IdentityService : IIdentityService
 
     public async Task<IdentityResult> ConfirmEmailAsync(Guid? userId, string token)
     {
-        var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+        var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
         
         var result = await _userManager.ConfirmEmailAsync(user, token);
 
         return result.ToApplicationResult();
+    }
+
+    public async Task<IdentityResult> CheckPasswordSignInAsync(AppUser user, string password) 
+    {
+        var result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
+
+        return result.ToApplicationResult();
+    }
+
+    public async Task<IList<string>> GetRolesAsync(AppUser user)
+    {
+        return await _userManager.GetRolesAsync(user);
     }
 }

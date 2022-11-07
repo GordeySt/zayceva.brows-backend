@@ -1,6 +1,8 @@
 ﻿using Application.ApplicationUsers.Commands.ConfirmEmails;
 using Application.ApplicationUsers.Commands.SignupUsers;
+using Application.ApplicationUsers.DTOs;
 using Application.ApplicationUsers.Queries.ResendEmailConfirmations;
+using Application.ApplicationUsers.Queries.SignInUsers;
 using Application.Common.Enums;
 using Microsoft.AspNetCore.Mvc;
 
@@ -78,5 +80,14 @@ public class AuthController : ApiControllerBase
             return StatusCode((int) result.Result, result.Message);
 
         return NoContent();
+    }
+
+    [HttpPost("sign-in")]
+    public async Task<ActionResult<UserDto>> SignInUser([FromBody] SignInUserQuery query)
+    {
+        var result = await Mediator.Send(query);
+        
+        return result.Result is not ApplicationResultType.Success ? 
+            StatusCode((int) result.Result, result.Message) : Ok(result.Data);
     }
 }
