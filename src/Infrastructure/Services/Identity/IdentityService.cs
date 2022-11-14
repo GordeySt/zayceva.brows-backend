@@ -64,6 +64,15 @@ public class IdentityService : IIdentityService
             .SingleOrDefaultAsync(user => user.Email == email);
     }
 
+    public async Task<AppUser> GetUserByIdAsync(Guid id)
+    {
+        return await _applicationDbContext.Users
+            .AsNoTracking()
+            .Include(user => user.UserRoles)
+            .ThenInclude(userRole => userRole.AppRole)
+            .SingleOrDefaultAsync(user => user.Id == id);
+    }
+
     public async Task<string> GenerateEmailConfirmationTokenAsync(Guid userId)
     {
         var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
