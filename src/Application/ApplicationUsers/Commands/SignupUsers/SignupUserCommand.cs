@@ -32,7 +32,7 @@ public class SignupUserCommandHandler : IRequestHandler<SignupUserCommand, Appli
 
     public async Task<ApplicationResult> Handle(SignupUserCommand request, CancellationToken cancellationToken)
     {
-        if (await _identityService.GetUserIdByEmailAsync(request.Email) is not null)
+        if (await _identityService.GetUserByEmailAsync(request.Email) is not null)
         {
             return new ApplicationResult(
                 ApplicationResultType.InvalidData, 

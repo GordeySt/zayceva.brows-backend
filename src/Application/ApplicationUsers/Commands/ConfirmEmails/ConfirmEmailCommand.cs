@@ -25,9 +25,9 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, A
 
     public async Task<ApplicationResult> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
     {
-        var userId = await _identityService.GetUserIdByEmailAsync(request.Email);
+        var user = await _identityService.GetUserByEmailAsync(request.Email);
 
-        if (userId is null)
+        if (user is null)
         {
             return new ApplicationResult(ApplicationResultType.NotFound,
                 NotFoundExceptionMessageConstants.NotFoundUser);
@@ -36,7 +36,7 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, A
         var decodedTokenBytes = WebEncoders.Base64UrlDecode(request.Token);
         var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
         
-        var result = await _identityService.ConfirmEmailAsync(userId, decodedToken);
+        var result = await _identityService.ConfirmEmailAsync(user.Id, decodedToken);
 
         if (!result.Succeeded)
         {

@@ -30,15 +30,15 @@ public class ResendEmailConfirmationQueryHandler : IRequestHandler<ResendEmailCo
     public async Task<ApplicationResult> Handle(ResendEmailConfirmationQuery request, 
         CancellationToken cancellationToken)
     {
-        var userId = await _identityService.GetUserIdByEmailAsync(request.Email);
+        var user = await _identityService.GetUserByEmailAsync(request.Email);
         
-        if (userId is null)
+        if (user is null)
         {
             return new ApplicationResult(ApplicationResultType.NotFound,
                 NotFoundExceptionMessageConstants.NotFoundUser);
         }
 
-        var token = await _identityService.GenerateEmailConfirmationTokenAsync(userId.Value);
+        var token = await _identityService.GenerateEmailConfirmationTokenAsync(user.Id);
 
         token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
         
