@@ -68,6 +68,7 @@ public class IdentityService : IIdentityService
     {
         return await _applicationDbContext.Users
             .AsNoTracking()
+            .Include(user => user.Appointments)
             .Include(user => user.UserRoles)
             .ThenInclude(userRole => userRole.AppRole)
             .SingleOrDefaultAsync(user => user.Id == id);
