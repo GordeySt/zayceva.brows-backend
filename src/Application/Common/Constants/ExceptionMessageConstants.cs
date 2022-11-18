@@ -2,12 +2,12 @@
 
 public static class NotFoundExceptionMessageConstants
 {
-    public const string NotFoundUser = nameof(NotFoundUser);
+    public const string NotFoundItem = nameof(NotFoundItem);
 }
 
 public static class BadRequestExceptionMessageConstants
 {
-    public const string ExistedUser = nameof(ExistedUser);
+    public const string ExistedItem = nameof(ExistedItem);
     public const string ProblemVerifyingEmail = nameof(ProblemVerifyingEmail);
 }
 

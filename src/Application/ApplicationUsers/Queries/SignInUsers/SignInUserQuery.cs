@@ -38,7 +38,7 @@ public class SignInUserQueryHandler : IRequestHandler<SignInUserQuery, Applicati
         if (user is null)
         {
             return new ApplicationResult<SignInResponse>(ApplicationResultType.Unauthorized,
-                NotFoundExceptionMessageConstants.NotFoundUser);
+                NotFoundExceptionMessageConstants.NotFoundItem);
         }
 
         var result = await _identityService.CheckPasswordSignInAsync(user, request.Password);

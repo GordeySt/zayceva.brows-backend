@@ -36,7 +36,7 @@ public class SignupUserCommandHandler : IRequestHandler<SignupUserCommand, Appli
         {
             return new ApplicationResult(
                 ApplicationResultType.InvalidData, 
-                BadRequestExceptionMessageConstants.ExistedUser);
+                BadRequestExceptionMessageConstants.ExistedItem);
         }
 
         var (result, userId) = await _identityService.CreateUserAsync(request);

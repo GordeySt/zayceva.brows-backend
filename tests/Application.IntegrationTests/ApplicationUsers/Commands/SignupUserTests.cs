@@ -54,7 +54,7 @@ public class SignupUserTests : BaseTestFixture
         
         // Assert
         result.Result.Should().Be(ApplicationResultType.InvalidData);
-        result.Message.Should().Be(BadRequestExceptionMessageConstants.ExistedUser);
+        result.Message.Should().Be(BadRequestExceptionMessageConstants.ExistedItem);
     }
     
     [Test]

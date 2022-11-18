@@ -38,7 +38,7 @@ public class ConfirmEmailTests : BaseTestFixture
 
         // Assert
         result.Result.Should().Be(ApplicationResultType.NotFound);
-        result.Message.Should().Be(NotFoundExceptionMessageConstants.NotFoundUser);
+        result.Message.Should().Be(NotFoundExceptionMessageConstants.NotFoundItem);
     }
 
     [Test]

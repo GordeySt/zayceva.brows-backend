@@ -30,7 +30,7 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, A
         if (user is null)
         {
             return new ApplicationResult(ApplicationResultType.NotFound,
-                NotFoundExceptionMessageConstants.NotFoundUser);
+                NotFoundExceptionMessageConstants.NotFoundItem);
         }
 
         var decodedTokenBytes = WebEncoders.Base64UrlDecode(request.Token);
