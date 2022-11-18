@@ -83,8 +83,8 @@ public class ApplicationDbContextInitialiser
             FirstName = "Admin",
             LastName = "Admin",
             Id = Guid.NewGuid(),
-            UserName = "administrator@localhost", 
-            Email = "administrator@localhost",
+            UserName = "administrator@localhost.com", 
+            Email = "administrator@localhost.com",
             SecurityStamp = Guid.NewGuid().ToString()
         };
         var user = new AppUser
@@ -92,8 +92,8 @@ public class ApplicationDbContextInitialiser
             FirstName = "User",
             LastName = "User",
             Id = Guid.NewGuid(),
-            UserName = "user@localhost", 
-            Email = "user@localhost",
+            UserName = "user@localhost.com", 
+            Email = "user@localhost.com",
             SecurityStamp = Guid.NewGuid().ToString()
         };
 
