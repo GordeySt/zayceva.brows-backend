@@ -18,9 +18,12 @@ public sealed class ApplicationDbContext : IdentityDbContext<
     >,
     IApplicationDbContext
 {
+    public DbSet<Appointment> Appointments { get; set; }
+    
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         Database.Migrate();
     }
 
