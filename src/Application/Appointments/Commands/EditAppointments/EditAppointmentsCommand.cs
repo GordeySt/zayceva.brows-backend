@@ -15,7 +15,7 @@ public class EditAppointmentCommand : IRequest<ApplicationResult>,
 {
     public Guid Id { get; set; }
     
-    public string Name { get; set; }
+    public string Title { get; set; }
 
     public DateTime StartDate { get; set; }
     

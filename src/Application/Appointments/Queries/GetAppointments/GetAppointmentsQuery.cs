@@ -29,6 +29,7 @@ public class GetAppointmentsQueryHandler
     {
         var appointments = _applicationDbContext.Appointments
             .AsNoTracking()
+            .Where(x => !x.IsBooked)
             .ProjectTo<AppointmentDto>(_mapper.ConfigurationProvider)
             .AsQueryable();
 

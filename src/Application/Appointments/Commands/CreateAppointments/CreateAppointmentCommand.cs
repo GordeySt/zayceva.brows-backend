@@ -11,6 +11,8 @@ namespace Application.Appointments.Commands.CreateAppointments;
 public class CreateAppointmentCommand : IRequest<ApplicationResult<CreateAppointmentCommand>>,
     IMapFrom<CreateAppointmentCommand>
 {
+    public Guid Id { get; set; }
+    
     public string Title { get; set; }
     
     public ushort Price { get; set; }

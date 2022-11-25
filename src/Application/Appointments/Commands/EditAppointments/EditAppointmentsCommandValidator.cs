@@ -8,7 +8,7 @@ public class EditAppointmentCommandValidator : AbstractValidator<EditAppointment
     {
         RuleFor(x => x.Id).NotEmpty();
         
-        RuleFor(x => x.Name).NotEmpty();
+        RuleFor(x => x.Title).NotEmpty();
 
         RuleFor(x => x.StartDate).NotEmpty();
 
