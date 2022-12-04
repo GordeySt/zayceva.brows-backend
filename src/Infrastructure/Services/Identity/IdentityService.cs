@@ -67,7 +67,6 @@ public class IdentityService : IIdentityService
     public async Task<AppUser> GetUserByIdAsync(Guid id)
     {
         return await _applicationDbContext.Users
-            .AsNoTracking()
             .Include(user => user.Appointments)
             .Include(user => user.UserRoles)
             .ThenInclude(userRole => userRole.AppRole)

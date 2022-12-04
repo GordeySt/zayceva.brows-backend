@@ -13,6 +13,8 @@ public class AppointmentDto : IMapFrom<Appointment>
     
     public DateTime EndDate { get; set; }
     
+    public ushort Price { get; set; }
+    
     public bool IsBooked { get; set; }
     
     public Guid UserId { get; set; }
